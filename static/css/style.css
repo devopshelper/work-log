@@ -1,0 +1,65 @@
+/* Work Log - small refinements on top of Tailwind */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: rgb(199 210 254);
+  color: rgb(30 27 75);
+}
+
+/* thin, RTL friendly scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(203 213 225);
+  border-radius: 9999px;
+  border: 2px solid rgb(241 245 249);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(148 163 184);
+}
+
+/* keep the native date picker legible in RTL layouts */
+input[type="date"] {
+  direction: ltr;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  margin-inline-start: 0;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+/* subtle entrance for log cards */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+article.group {
+  animation: rise 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  article.group { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* print: hide the inputs, keep the journal */
+@media print {
+  header, form#log-form, section form, footer, button, a[href="/docs"] { display: none !important; }
+  body { background: #fff; }
+  article.group { break-inside: avoid; border-color: #e2e8f0; box-shadow: none; }
+}
